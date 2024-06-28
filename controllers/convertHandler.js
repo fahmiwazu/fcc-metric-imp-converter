@@ -1,9 +1,11 @@
+// Input number and unit spliter with regular expression
 function numberStringSplitter(input){
   let number = input.match(/[.\d\/]+/g) || ["1"];
   let string = input.match(/[a-zA-Z]+/g)[0];
 
   return [number[0], string];
 }
+// Validate if number has division
 function checkDiv(possibleFraction){
   let nums = possibleFraction.split("/");
   if (nums.length > 2){
@@ -12,8 +14,10 @@ function checkDiv(possibleFraction){
   return nums;
 }
 
+// Imperial-Metric Convertion Algorithm
 function ConvertHandler() {
   
+  // Convert number into single value if has division
   this.getNum = function(input) {
     let result = numberStringSplitter(input)[0];
     let nums = checkDiv(result);
@@ -29,6 +33,7 @@ function ConvertHandler() {
     return result;
   };
   
+  // Get unit from input
   this.getUnit = function(input) {
     let result = numberStringSplitter(input)[1].toLowerCase();
     switch(result){
@@ -49,6 +54,7 @@ function ConvertHandler() {
     }
   };
   
+  // Unit Converter (Imperial - Metric)
   this.getReturnUnit = function(initUnit) {
     let unit = initUnit.toLowerCase();
 
@@ -70,9 +76,10 @@ function ConvertHandler() {
     }
   };
 
-  this.spellOutUnit = function(unit) {
-    let units = initUnit.toLowerCase();
-    switch(units){
+  // Spell Unit for printout respond
+  this.spellOutUnit = function(initUnit) {
+    let unit = initUnit.toLowerCase();
+    switch(unit){
       case "km":
         return "kilometers";
       case "mi":
@@ -90,6 +97,7 @@ function ConvertHandler() {
     }
   };
   
+  // Imperial-Metric Convertion Algotithm
   this.convert = function(initNum, initUnit) {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
@@ -120,15 +128,18 @@ function ConvertHandler() {
         result = undefined;
     }
 
+    // parse result into decimal with 5 digits precision
     return parseFloat(result.toFixed(5));
   };
   
+  // return value after convertion process
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-    let result;
-    
-    return result;
+    return `${initNum} ${this.spellOutUnit(
+      initUnit
+    )} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
   };
   
 }
 
+// Export module to global
 module.exports = ConvertHandler;
